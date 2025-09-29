@@ -3,7 +3,7 @@ import { endpointResolver } from "../utils/resolver.util";
 import {
   getAllTypeTransactions,
   getTypeTransactionById,
-} from "../controllers/type_transaction.controller";
+} from "../constrollers/type_transaction.controller";
 
 export const TYPE_TRANSACTION_ROUTER = Router();
 

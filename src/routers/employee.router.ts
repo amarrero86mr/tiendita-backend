@@ -6,7 +6,7 @@ import {
   getEmployeeById,
   postEmployee,
   editEmployee
-} from "../controllers/employee.controller";
+} from "../constrollers/employee.controller";
 
 export const EMPLOYEES_ROUTER = Router();
 

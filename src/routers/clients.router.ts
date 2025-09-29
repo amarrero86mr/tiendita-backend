@@ -5,17 +5,48 @@ import {
   getAllClients,
   getClientById,
   postClient,
-} from "../controllers/clients.controller";
+} from "../constrollers/clients.controller";
 import { endpointResolver } from "../utils/resolver.util";
 
 export const CLIENTS_ROUTER = Router();
 
-// Todos los clientes
+/**
+ * @swagger
+ * /clients/all:
+ *   get:
+ *     summary: Returns all clients
+ *     tags: [Client]
+ *     responses:
+ *       200:
+ *         description: the list of clients
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Client'
+ */
 CLIENTS_ROUTER.get("/all", async (req, res) => {
   endpointResolver(req, res, await getAllClients());
 });
 
-// Un clients por id
+
+/**
+ * @swagger
+ * /clients/{id}:
+ *   get:
+ *     summary: Returns all clients
+ *     tags: [Client]
+ *     responses:
+ *       200:
+ *         description: cliend found by id
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               items:
+ *                 $ref: '#/components/schemas/Client'
+ */
 CLIENTS_ROUTER.get("/:id", async (req, res) => {
   endpointResolver(req, res, await getClientById(req.params.id));
 });

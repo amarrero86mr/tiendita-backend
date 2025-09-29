@@ -6,7 +6,7 @@ import {
   getAllProducts,
   getProductById,
   postProduct,
-} from "../controllers/product.controller";
+} from "../constrollers/product.controller";
 import { getPaginationDtoFromParams } from "../utils/pagination.utils";
 import { endpointResolver } from "../utils/resolver.util";
 

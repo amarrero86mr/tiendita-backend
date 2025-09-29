@@ -1,20 +1,47 @@
-import { createPool } from "mysql2/promise";
-import { config } from "dotenv";
-import { env } from "process";
+import { createPool, PoolOptions } from "mysql2/promise";
+import dotenv from "dotenv"
 
+dotenv.config();
 
-export const DB_CONNECTION = createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
+function getDbConfig(): PoolOptions {
+  // if (process.env.DB_URI) {
+  //   // ✅ conexión por URI
+  //   return {
+  //     uri: process.env.DB_URI,
+  //     waitForConnections: true,
+  //     connectionLimit: 5,
+  //     queueLimit: 0,
+  //   };
+  // }
 
-  port: process.env.DB_PORT,
-  uri: process.env.DB_URI,
-  waitForConnections: true,
-  connectionLimit: 5,
-  queueLimit: 0,
-});
+  // ✅ conexión por parámetros sueltos
+  return {
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
+    port: process.env.DB_PORT ? Number(process.env.DB_PORT) : 3306, // 👈 casteo a number
+    uri: process.env.DB_URI as string,
+    waitForConnections: true,
+    connectionLimit: 5,
+    queueLimit: 0,
+  };
+}
+
+export const DB_CONNECTION = createPool(getDbConfig()
+//   {
+//   host: process.env.DB_HOST,
+//   user: process.env.DB_USER,
+//   password: process.env.DB_PASSWORD,
+//   database: process.env.DB_DATABASE,
+
+//   port: process.env.DB_PORT,
+//   uri: process.env.DB_URI,
+//   waitForConnections: true,
+//   connectionLimit: 5,
+//   queueLimit: 0,
+// }
+);
 
 DB_CONNECTION.getConnection()
   .then((connection) => {

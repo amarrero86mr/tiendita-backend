@@ -6,9 +6,9 @@
 -- Generation Time: Aug 25, 2024 at 01:17 AM
 -- Server version: 8.0.22-13
 -- PHP Version: 8.2.21
-CREATE DATABASE `reddit_db`;
+CREATE DATABASE `tiendita_db`;
 
-use `reddit_db`;
+use `tiendita_db`;
 
 SET
     SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -18,7 +18,7 @@ START TRANSACTION;
 SET
     time_zone = "+00:00";
 
--- Database: `reddit_db`
+-- Database: `tiendita_db`
 -- --------------------------------------------------------
 -- Table structure for table `type_transactions`
 CREATE TABLE if NOT EXISTS `type_transactions` (

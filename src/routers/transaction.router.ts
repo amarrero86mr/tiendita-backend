@@ -4,7 +4,7 @@ import {
   getAllTransactions,
   getTransactionById,
   postTransaction,
-} from "../controllers/transaction.controller";
+} from "../constrollers/transaction.controller";
 
 export const TRANSACTION_ROUTER = Router();
 

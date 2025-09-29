@@ -9,7 +9,7 @@ import {
 import { isTProductDto, TProduct, TProductDto } from "../schemas/product.type";
 import { error400, error404, error500 } from "../utils/errors.util";
 import { getSqlPaginationQuery } from "../utils/pagination.utils";
-import { getPagination } from "./pagination.controller";
+import { getPagination } from "../Controllers/pagination.controller";
 
 export const getAllProducts = async (
   partialDto: Partial<TPaginationDto>
