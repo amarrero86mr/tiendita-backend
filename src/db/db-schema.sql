@@ -182,55 +182,28 @@ INSERT INTO
         `price`
     )
 VALUES
-    (
-        1,
-        'producto chikito',
-        'producto humilde de toda la vida',
-        1000,
-        5
-    ),
-    (
-        2,
-        'producto',
-        'una producto de tamaño decente',
-        500,
-        10
-    ),
-    (
-        3,
-        'producto grande',
-        'producto de gran tamaño',
-        100,
-        20
-    ),
-    (
-        4,
-        'omega producto',
-        'producto pack familiar',
-        2,
-        5000
-    ),
-    (
-        5,
-        'producto a eliminar',
-        'por favor eliminame luego',
-        100,
-        5
-    ),
-    (
-        6,
-        'carburadores elerbruck',
-        'por su pollo',
-        10,
-        10
-    ),
-    (
-        11,
-        'skin de yummi',
-        'la skin está UnU',
-        1,
-        1
-    );
+    (1, 'Yerba Piporé', 'Paquete de yerba Piporé clásica', 500, 2150),
+    (2, 'Café Cabrales', 'Paquete de café tostado molido 500g', 300, 4200),
+    (3, 'Aceite Natura', 'Botella de aceite de girasol 1L', 600, 3500),
+    (4, 'Arroz Gallo Oro', 'Paquete de arroz largo fino 1Kg', 800, 1900),
+    (5, 'Fideos Lucchetti', 'Paquete de fideos tallarín 500g', 700, 1250),
+    (6, 'Azúcar Ledesma', 'Bolsa de azúcar común 1Kg', 900, 1100),
+    (7, 'Leche La Serenísima', 'Sachet de leche entera 1L', 1000, 950),
+    (8, 'Harina Pureza', 'Paquete de harina de trigo 000 1Kg', 750, 1150),
+    (9, 'Mermelada Arcor', 'Frasco de mermelada de frutilla 454g', 400, 1800),
+    (10, 'Galletitas Oreo', 'Paquete de galletitas rellenas de chocolate 117g', 1200, 950),
+    (11, 'Detergente Magistral', 'Botella de detergente concentrado limón 750ml', 500, 2200),
+    (12, 'Lavandina Ayudín', 'Botella de lavandina clásica 1L', 450, 1800),
+    (13, 'Jabón en Polvo Ariel', 'Bolsa de jabón en polvo 800g', 300, 4200),
+    (14, 'Desodorante de Piso Poett', 'Botella fragancia primavera 900ml', 400, 2600),
+    (15, 'Papel Higiénico Higienol', 'Paquete de 12 rollos doble hoja', 350, 5300),
+    (16, 'Toallas de Cocina Elite', 'Paquete de 3 rollos de cocina', 250, 3100),
+    (17, 'Esponja Virulana', 'Paquete de 3 esponjas multiuso', 600, 950),
+    (18, 'Trapo de Piso Seco', 'Trapo absorbente de algodón', 550, 1200),
+    (19, 'Guantes de Látex', 'Guantes de limpieza talla M', 400, 1500),
+    (20, 'Insecticida Raid', 'Aerosol contra mosquitos y cucarachas 360ml', 300, 2800)
+    ;
+
 
 -- --------------------------------------------------------
 --
