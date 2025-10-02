@@ -4,24 +4,19 @@ import dotenv from "dotenv"
 dotenv.config();
 
 function getDbConfig(): PoolOptions {
-  // if (process.env.DB_URI) {
-  //   // ✅ conexión por URI
-  //   return {
-  //     uri: process.env.DB_URI,
-  //     waitForConnections: true,
-  //     connectionLimit: 5,
-  //     queueLimit: 0,
-  //   };
-  // }
-
-  // ✅ conexión por parámetros sueltos
+  
   return {
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
-    port: process.env.DB_PORT ? Number(process.env.DB_PORT) : 3306, // 👈 casteo a number
-    uri: process.env.DB_URI as string,
+    // datos de coneccion local en dev
+    host: "localhost",
+    user: "root",
+    password: process.env.DB_PASS,
+    database: "tiendita_db",
+    // host: process.env.DB_HOST,
+    // user: process.env.DB_USER,
+    // password: process.env.DB_PASSWORD,
+    // database: process.env.DB_DATABASE,
+    port: process.env.DB_PORT ? Number(process.env.DB_PORT) : 3306,
+    // uri: process.env.DB_URI as string,
     waitForConnections: true,
     connectionLimit: 5,
     queueLimit: 0,

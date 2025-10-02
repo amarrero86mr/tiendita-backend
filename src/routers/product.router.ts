@@ -15,9 +15,9 @@ export const PRODUCT_ROUTER = Router();
 
 /**
  * @swagger
- * /products/all/{page}:/{items_per_page}:
+ * /products/all/{page}/{items_per_page}:
  *   get:
- *     summary: Returns all products
+ *     summary: Returns all products, per page and by number of items per page
  *     tags: [Products]
  *     parameters:
  *       - in: path
