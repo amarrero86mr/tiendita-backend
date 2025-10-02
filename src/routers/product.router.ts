@@ -12,6 +12,38 @@ import { endpointResolver } from "../utils/resolver.util";
 
 export const PRODUCT_ROUTER = Router();
 
+
+/**
+ * @swagger
+ * /products/all/{page}:/{items_per_page}:
+ *   get:
+ *     summary: Returns all products
+ *     tags: [Products]
+ *     parameters:
+ *       - in: path
+ *         name: page
+ *         schema:
+ *           type: string
+ *           default: 1
+ *         required: true
+ *         description: Page number
+ *       - in: path
+ *         name: items_per_page
+ *         schema:
+ *           type: string
+ *           default: 10
+ *         required: true
+ *         description: Number of items per page
+ *     responses:
+ *       200:
+ *         description: the list of products
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Products'
+ */
 PRODUCT_ROUTER.get("/all/:page?/:items_per_page?", async (req, res) => {
   endpointResolver(
     req,

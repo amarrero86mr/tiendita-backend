@@ -15,7 +15,7 @@ export const CLIENTS_ROUTER = Router();
  * /clients/all:
  *   get:
  *     summary: Returns all clients
- *     tags: [Client]
+ *     tags: [Clients]
  *     responses:
  *       200:
  *         description: the list of clients
@@ -24,7 +24,7 @@ export const CLIENTS_ROUTER = Router();
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/Client'
+ *                 $ref: '#/components/schemas/Clients'
  */
 CLIENTS_ROUTER.get("/all", async (req, res) => {
   endpointResolver(req, res, await getAllClients());
@@ -35,17 +35,24 @@ CLIENTS_ROUTER.get("/all", async (req, res) => {
  * @swagger
  * /clients/{id}:
  *   get:
- *     summary: Returns all clients
- *     tags: [Client]
+ *     summary: Return a client by ID
+ *     tags: [Clients]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: Client ID
  *     responses:
  *       200:
- *         description: cliend found by id
+ *         description: Client found
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               items:
- *                 $ref: '#/components/schemas/Client'
+ *               $ref: '#/components/schemas/Clients'
+ *       404:
+ *         description: Client not found
  */
 CLIENTS_ROUTER.get("/:id", async (req, res) => {
   endpointResolver(req, res, await getClientById(req.params.id));
