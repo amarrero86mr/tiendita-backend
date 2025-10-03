@@ -6,15 +6,10 @@ dotenv.config();
 function getDbConfig(): PoolOptions {
   
   return {
-    // datos de coneccion local en dev
-    host: "localhost",
-    user: "root",
-    password: process.env.DB_PASS,
-    database: "tiendita_db",
-    // host: process.env.DB_HOST,
-    // user: process.env.DB_USER,
-    // password: process.env.DB_PASSWORD,
-    // database: process.env.DB_DATABASE,
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
     port: process.env.DB_PORT ? Number(process.env.DB_PORT) : 3306,
     // uri: process.env.DB_URI as string,
     waitForConnections: true,
