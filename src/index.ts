@@ -22,13 +22,13 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Express + TypeScript Server");
 });
 
-app.use("/suppliers", SUPPLIERS_ROUTER);
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
 });
 
 app.use("/products", PRODUCT_ROUTER);
+app.use("/suppliers", SUPPLIERS_ROUTER);
 
 app.use("/clients", CLIENTS_ROUTER);
 
