@@ -26,3 +26,12 @@ export const error400 = (description?: string) => {
   };
   return error;
 };
+
+export const error401 = (description?: string) => {
+  const error: TError = {
+    msg: "401 - Unauthorized / Authorization Expired",
+    status: 400,
+    description,
+  };
+  return error;
+};
