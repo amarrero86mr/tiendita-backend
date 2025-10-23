@@ -2,8 +2,8 @@ import { isDto } from "../utils/is_dto.util";
 
 export type TVisitors = {
   readonly id_user: number;
-  name_email: string;
-  password_hash: string;
+  email: string;
+  password: string;
 };
 
 export type TVisitorsDto = Omit<TVisitors, "id_user">;

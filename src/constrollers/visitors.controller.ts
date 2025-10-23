@@ -3,6 +3,7 @@ import { isTVisitorsDto, TVisitors, TVisitorsDto } from "../schemas/visitors.typ
 import { TError } from "../schemas/error.type";
 import { DB_CONNECTION } from "../db/access-db";
 import { error400, error404, error500 } from "../utils/errors.util";
+import bcrypt from "bcryptjs";
 
 export const getVisitors = async (): Promise<Array<RowDataPacket & TVisitors> | TError> => {
     const querySql = "SELECT * FROM visitors"
@@ -21,25 +22,60 @@ export const getVisitors = async (): Promise<Array<RowDataPacket & TVisitors> | 
     }
 }
 
-
-export const postVisitors = async (
-    user : TVisitorsDto =
-): Promise<Array<RowDataPacket & TVisitors> | TError> => {
-    const querySql = "INSERT INTO visitors (user_email, password_hash) VALUES (?, ?)"
-    const { name_email, password_hash } = user;
+export const getVisitorById = async (
+    id: string | number
+): Promise<TVisitors | TError> => {
+    const querySql = "SELECT * FROM visitors WHERE id_visitor = ?"
 
     try {
-        if (!name_email || !password_hash) {
-        return res.status(400).json({ error: "Faltan datos" });
+        // Genera la coneccion
+        const connection = await DB_CONNECTION.getConnection();
 
+        // Ejecuta la peticion
+        const [visitor] = await connection.query<[RowDataPacket & TVisitors]>(querySql, [id]);
+
+        // Libera y cierra la coneccion
+        connection.release();
+
+        // Si no se encuentra el empleado devuelve un error
+        if (!visitor[0]) {
+            return error404();
         }
 
+        // Si existe el empleado, lo devuelve
+        return visitor[0];
+    } catch (e) {
+        console.log(e);
+        // En caso de cualquier error de infraestructura, devuelve el sig obj de error
+        return error500();
+    }
+};
+
+export const postVisitor = async (
+    newVisitor: TVisitorsDto
+): Promise<TVisitors | TError> => {
+    if (!isTVisitorsDto(newVisitor)) {
+        return error400("Invalid visitor format");
     }
 
-  const hashed = await bcrypt.hash(password_hash, 10);
+    const sql = "INSERT INTO visitors (email, password_hash) VALUES (?, ?)";
 
-  await DB_CONNECTION.query( querySql, [name_email, password_hash] );
+    try {
+        const connection = await DB_CONNECTION.getConnection();
+        const hashedPassword = await bcrypt.hash(newVisitor.password, 10);
 
-  res.json({ message: "Usuario registrado" });
-});
+        const [result] = await connection.query<ResultSetHeader>(sql, [
+            newVisitor.email,
+            hashedPassword,
+        ]);
+        connection.release();
+
+        // Devuelve el visitor recién creado
+
+        return getVisitorById(result.insertId);
+    } catch (e) {
+        console.error(e);
+        return error500();
+    }
+};
 

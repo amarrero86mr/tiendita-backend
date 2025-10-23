@@ -248,3 +248,9 @@ VALUES
 -- select * from `client_orders`;
 -- select * from `supplier_orders`;
 -- select * from `employee_payments`;
+
+CREATE TABLE if NOT EXISTS `visitors` (
+  `id_visitor` INT AUTO_INCREMENT PRIMARY KEY,
+  `email` VARCHAR(255) UNIQUE NOT NULL,
+  `password_hash` VARCHAR(255) NOT NULL,
+);
