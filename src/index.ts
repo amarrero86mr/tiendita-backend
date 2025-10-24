@@ -9,6 +9,7 @@ import { SUPPLIERS_ROUTER } from "./routers/supplier.router";
 import { TRANSACTION_ROUTER } from "./routers/transaction.router";
 import { TYPE_TRANSACTION_ROUTER } from "./routers/type_transaction.route";
 import swaggerSpec from "./swagger";
+import { requireAuth } from "./middleware/requireAuth";
 
 dotenv.config();
 
@@ -27,14 +28,11 @@ app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
 });
 
-app.use("/products", PRODUCT_ROUTER);
-app.use("/suppliers", SUPPLIERS_ROUTER);
-
-app.use("/clients", CLIENTS_ROUTER);
-
-app.use("/transactions", TRANSACTION_ROUTER);
-app.use("/type_transactions", TYPE_TRANSACTION_ROUTER);
-
-app.use("/employees", EMPLOYEES_ROUTER);
+app.use("/products", requireAuth, PRODUCT_ROUTER);
+app.use("/suppliers", requireAuth, SUPPLIERS_ROUTER);
+app.use("/clients", requireAuth, CLIENTS_ROUTER);
+app.use("/transactions", requireAuth, TRANSACTION_ROUTER);
+app.use("/type_transactions", requireAuth, TYPE_TRANSACTION_ROUTER);
+app.use("/employees", requireAuth, EMPLOYEES_ROUTER);
 
 app.use("/docs", swagerUi.serve, swagerUi.setup(swaggerSpec));

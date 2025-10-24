@@ -8,7 +8,7 @@ export const requireAuth = (req: Request, res: Response, next: NextFunction) => 
   const token = authHeader?.split(" ")[1]; // formato "Bearer <token>"
 
   if (!token) {
-    const err = error401("Token requerido");
+    const err = error401("Access denied. Token missing.");
     return res.status(err.status).json(err);
   }
 
@@ -17,7 +17,7 @@ export const requireAuth = (req: Request, res: Response, next: NextFunction) => 
     (req as any).visitor = decoded; // guarda los datos del visitor autenticado
     next();
   } catch {
-    const err = error401("Token inválido o expirado");
+    const err = error401("Invalid or expired token.");
     return res.status(err.status).json(err);
   }
 };
