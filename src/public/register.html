@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registro</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+</head>
+<body class="bg-gray-100 flex justify-center items-center h-screen">
+
+  <div class="bg-white p-6 rounded-2xl shadow-md w-80">
+    <h2 class="text-2xl font-semibold text-center mb-4">Registro</h2>
+
+    <form id="registerForm" class="flex flex-col gap-3">
+      <input
+        type="email"
+        id="email"
+        placeholder="Email"
+        class="border rounded-md p-2"
+        required
+      />
+      <input
+        type="password"
+        id="password"
+        placeholder="Contraseña"
+        class="border rounded-md p-2"
+        required
+      />
+      <input
+          type="text"
+          name="honeypot"
+          style="display:none" 
+          tabIndex={-1}
+          autoComplete="off"
+        />
+
+      <button
+        type="submit"
+        class="bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition"
+      >
+        Registrarse
+      </button>
+    </form>
+
+    <p id="message" class="text-center mt-3 text-sm"></p>
+  </div>
+
+  <script>
+    const form = document.getElementById("registerForm");
+    const message = document.getElementById("message");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      message.textContent = "";
+      const honeypot = document.getElementById("honeypot").value;
+
+      if (honeypot) throw new Error("Error en el registro");
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      try {
+        const res = await fetch("http://localhost:3000/auth/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) throw new Error(data?.msg || "Error en el registro");
+
+        // Guarda el token para futuras solicitudes protegidas
+        localStorage.setItem("token", data.token);
+
+        message.textContent = "✅ Registro exitoso";
+        message.className = "text-green-600 text-center mt-3 text-sm";
+        form.reset();
+
+      } catch (err) {
+        message.textContent = `❌ ${err.message}`;
+        message.className = "text-red-600 text-center mt-3 text-sm";
+      }
+    });
+  </script>
+</body>
+</html>
