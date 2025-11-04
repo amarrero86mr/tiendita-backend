@@ -1,77 +1,111 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
-</head>
-<body class="bg-gray-100 flex justify-center items-center h-screen">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Tiendita API</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: #f6f6f6;
+      }
+      form {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      input {
+        display: block;
+        width: 100%;
+        margin-bottom: 1rem;
+        padding: 0.6rem;
+      }
+      button {
+        width: 100%;
+        padding: 0.8rem;
+        background: #0077ff;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .small {
+        text-align: center;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
 
-  <div class="bg-white p-6 rounded-2xl shadow-md w-80">
-    <h2 class="text-2xl font-semibold text-center mb-4">Iniciar sesión</h2>
+  <body>
+    <form id="loginForm">
+      <h2>Iniciar sesión</h2>
+      <input type="email" id="email" placeholder="Email" required />
+      <input type="password" id="password" placeholder="Contraseña" required />
 
-    <form id="loginForm" class="flex flex-col gap-3">
+      <!-- Anti-bot honeypot -->
       <input
-        type="email"
-        id="email"
-        placeholder="Email"
-        class="border rounded-md p-2"
-        required
-      />
-      <input
-        type="password"
-        id="password"
-        placeholder="Contraseña"
-        class="border rounded-md p-2"
-        required
+        type="checkbox"
+        id="hiddenBot"
+        name="bot"
+        style="display: none"
+        tabindex="-1"
+        autocomplete="off"
       />
 
-      <button
-        type="submit"
-        class="bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
-      >
-        Entrar
-      </button>
+      <!-- Checkbox humano -->
+      <div>
+        <input type="checkbox" id="humanCheck" required />
+        <label for="humanCheck">Soy humano 🤖❌</label>
+      </div>
+
+      <button type="submit">Ingresar</button>
+
+      <div class="small">
+        ¿No tenés cuenta?
+        <a href="./register.html">Registrate</a>
+      </div>
     </form>
 
-    <p id="message" class="text-center mt-3 text-sm"></p>
-  </div>
+    <script>
+      const form = document.getElementById("loginForm");
 
-  <script>
-    const form = document.getElementById("loginForm");
-    const message = document.getElementById("message");
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
 
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      message.textContent = "";
+        // anti-bot
+        if (document.getElementById("hiddenBot").checked) {
+          alert("🤖 Detectado bot");
+          return;
+        }
 
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value.trim();
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
 
-      try {
-        const res = await fetch("http://localhost:3000/auth/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password }),
-        });
+        try {
+          const res = await fetch("/api/visitors/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password }),
+          });
 
-        const data = await res.json();
+          const data = await res.json();
 
-        if (!res.ok) throw new Error(data?.msg || "Credenciales inválidas");
-
-        // Guarda el token en localStorage
-        localStorage.setItem("token", data.token);
-
-        message.textContent = "✅ Inicio de sesión exitoso";
-        message.className = "text-green-600 text-center mt-3 text-sm";
-        form.reset();
-
-      } catch (err) {
-        message.textContent = `❌ ${err.message}`;
-        message.className = "text-red-600 text-center mt-3 text-sm";
-      }
-    });
-  </script>
-</body>
+          if (res.ok && data.token) {
+            localStorage.setItem("token", data.token);
+            window.location.href = "/docs";
+          } else {
+            alert(data.msg || "Error al iniciar sesión");
+          }
+        } catch (err) {
+          console.error(err);
+          alert("Error de conexión");
+        }
+      });
+    </script>
+  </body>
 </html>

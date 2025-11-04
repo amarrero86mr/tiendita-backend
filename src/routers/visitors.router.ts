@@ -22,7 +22,7 @@ VISITORS_ROUTER.post("/register", async (req, res) => {
 });
 
 // Login
-VISITORS_ROUTER.get("/login", async (req, res) => {
+VISITORS_ROUTER.post("/login", async (req, res) => {
   const credentials = req.body as TVisitorsDto;
   const result = await loginVisitor(credentials);
 

@@ -56,6 +56,7 @@ export const postVisitor = async (
     newVisitor: TVisitorsDto
 ): Promise<TVisitors | TError> => {
     if (!isTVisitorsDto(newVisitor)) {
+        console.log(newVisitor)
         return error400("Invalid visitor format");
     }
 

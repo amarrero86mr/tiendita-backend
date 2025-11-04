@@ -11,8 +11,8 @@ export type TVisitorsDto = Omit<TVisitors, "id_user">;
 export const isTVisitorsDto = (obj: any): obj is TVisitorsDto => {
   // creo el array de propiedades esperadas del tipo TTransactionDto
   const keys_values = [
-    { key: "name_email", type: "string" },
-    { key: "password_hash", type: "string" },
+    { key: "email", type: "string" },
+    { key: "password", type: "string" },
   ];
 
   // devuelvo el resultado de la validación de esas propiedades

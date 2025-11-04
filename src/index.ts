@@ -10,6 +10,8 @@ import { TRANSACTION_ROUTER } from "./routers/transaction.router";
 import { TYPE_TRANSACTION_ROUTER } from "./routers/type_transaction.route";
 import swaggerSpec from "./swagger";
 import { requireAuth } from "./middleware/requireAuth";
+import { VISITORS_ROUTER } from "./routers/visitors.router";
+import path from "path";
 
 dotenv.config();
 
@@ -19,14 +21,31 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Express + TypeScript Server");
-});
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname,'public')));
 
+app.use(express.static("public"));
+// app.use("/", (req: Request, res: Response) => {
+//   res.sendFile(__dirname + '/public/login.html');
+//   res.status(200);
+// });
+
+// app.use("/register", (req: Request, res: Response) => {
+//   res.sendFile(__dirname + '/public/register.html');
+//   res.status(200);
+// });
+
+app.use("/api/visitors", VISITORS_ROUTER);
+// app.use("/", (req: Request, res: Response) => {
+//   res.sendFile(__dirname + '/public/login.html');
+//   res.status(200);
+// });
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
 });
+
+app.use("/docs", swagerUi.serve, swagerUi.setup(swaggerSpec));
 
 app.use("/products", requireAuth, PRODUCT_ROUTER);
 app.use("/suppliers", requireAuth, SUPPLIERS_ROUTER);
@@ -35,4 +54,3 @@ app.use("/transactions", requireAuth, TRANSACTION_ROUTER);
 app.use("/type_transactions", requireAuth, TYPE_TRANSACTION_ROUTER);
 app.use("/employees", requireAuth, EMPLOYEES_ROUTER);
 
-app.use("/docs", swagerUi.serve, swagerUi.setup(swaggerSpec));
