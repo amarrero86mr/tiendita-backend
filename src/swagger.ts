@@ -2,6 +2,12 @@ import swaggerJsDoc from "swagger-jsdoc";
 /**
  * @swagger
  * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ * 
  *   schemas:
  *     Clients:
  *       type: object

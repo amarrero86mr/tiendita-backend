@@ -25,15 +25,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname,'public')));
 
 app.use(express.static("public"));
-// app.use("/", (req: Request, res: Response) => {
-//   res.sendFile(__dirname + '/public/login.html');
-//   res.status(200);
-// });
-
-// app.use("/register", (req: Request, res: Response) => {
-//   res.sendFile(__dirname + '/public/register.html');
-//   res.status(200);
-// });
 
 app.use("/api/visitors", VISITORS_ROUTER);
 // app.use("/", (req: Request, res: Response) => {
@@ -45,7 +36,12 @@ app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
 });
 
-app.use("/docs", swagerUi.serve, swagerUi.setup(swaggerSpec));
+// app.use("/docs", swagerUi.serve, swagerUi.setup(swaggerSpec));
+app.use("/docs", swagerUi.serve, swagerUi.setup(swaggerSpec, {
+  swaggerOptions: {
+    persistAuthorization: true,
+  },
+}));
 
 app.use("/products", requireAuth, PRODUCT_ROUTER);
 app.use("/suppliers", requireAuth, SUPPLIERS_ROUTER);

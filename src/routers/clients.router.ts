@@ -15,6 +15,8 @@ export const CLIENTS_ROUTER = Router();
  * /clients/all:
  *   get:
  *     summary: Returns all clients
+ *     security:
+ *       - bearerAuth: []
  *     tags: [Clients]
  *     responses:
  *       200:
@@ -36,6 +38,8 @@ CLIENTS_ROUTER.get("/all", async (req, res) => {
  * /clients/{id}:
  *   get:
  *     summary: Return a client by ID
+ *     security:
+ *       - bearerAuth: []
  *     tags: [Clients]
  *     parameters:
  *       - in: path
