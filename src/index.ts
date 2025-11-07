@@ -1,7 +1,7 @@
 import cors from "cors";
 import dotenv from "dotenv";
 import express, { Express, Request, Response } from "express";
-import swagerUi from "swagger-ui-express";
+import { generateHTML, serveFiles } from "swagger-ui-express";
 import { CLIENTS_ROUTER } from "./routers/clients.router";
 import { EMPLOYEES_ROUTER } from "./routers/employee.router";
 import { PRODUCT_ROUTER } from "./routers/product.router";
@@ -36,12 +36,17 @@ app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
 });
 
+app.use(
+  "/docs",
+  serveFiles(swaggerSpec),
+  (req: any, res: any) => res.send(generateHTML(swaggerSpec))
+);
 // app.use("/docs", swagerUi.serve, swagerUi.setup(swaggerSpec));
-app.use("/docs", swagerUi.serve, swagerUi.setup(swaggerSpec, {
+/* app.use("/docs", swagerUi.serve, swagerUi.setup(swaggerSpec, {
   swaggerOptions: {
     persistAuthorization: true,
   },
-}));
+})); */
 
 app.use("/products", requireAuth, PRODUCT_ROUTER);
 app.use("/suppliers", requireAuth, SUPPLIERS_ROUTER);
@@ -50,3 +55,4 @@ app.use("/transactions", requireAuth, TRANSACTION_ROUTER);
 app.use("/type_transactions", requireAuth, TYPE_TRANSACTION_ROUTER);
 app.use("/employees", requireAuth, EMPLOYEES_ROUTER);
 
+export default app;
