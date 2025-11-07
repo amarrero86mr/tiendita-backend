@@ -19,7 +19,8 @@
     "mysql2": "^3.10.2",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "util": "^0.12.5"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
