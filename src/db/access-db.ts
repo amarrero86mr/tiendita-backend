@@ -11,7 +11,7 @@ function getDbConfig(): PoolOptions {
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
     port: process.env.DB_PORT ? Number(process.env.DB_PORT) : 3306,
-    // uri: process.env.DB_URI as string,
+    uri: process.env.DB_URI as string,
     waitForConnections: true,
     connectionLimit: 5,
     queueLimit: 0,

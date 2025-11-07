@@ -6,7 +6,7 @@ import {
   getSupplierById,
   postSupplier,
   putSupplier,
-} from "../controllers/supplier.controller";
+} from "../constrollers/supplier.controller";
 import { endpointResolver } from "../utils/resolver.util";
 
 export const SUPPLIERS_ROUTER = Router();
