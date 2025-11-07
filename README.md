@@ -1,4 +1,4 @@
-# Tiendita
+# Tiendita_DB
 
 **Proyecto backend para llevar el registro contable de una tienda. Este proyecto utiliza [Node.js](http://nodejs.org) y [Express](https://expressjs.com) .**
 
