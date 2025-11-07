@@ -60,8 +60,7 @@
     <div>
       <div class="g-recaptcha" data-sitekey="6LewMqkrAAAAALrh47bzvEUad7misHOUOJdl2y3P" data-callback="enabledSubmit"
         required></div>
-      <!-- <input type="checkbox" id="humanCheck" required />
-        <label for="humanCheck">Soy humano 🤖❌</label> -->
+      
     </div>
 
     <button type="submit">Ingresar</button>
@@ -84,8 +83,7 @@
         return;
       }
 
-      let response = grecaptcha.getResponse();
-
+      const response = grecaptcha.getResponse();
       if (response.length == 0) {
         alert("🤖 Captcha NO verificado");
         return;
