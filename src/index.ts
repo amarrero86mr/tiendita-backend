@@ -1,7 +1,7 @@
 import cors from "cors";
 import dotenv from "dotenv";
 import express, { Express, Request, Response } from "express";
-import { generateHTML, serveFiles } from "swagger-ui-express";
+// import { generateHTML, serveFiles } from "swagger-ui-express";
 import { CLIENTS_ROUTER } from "./routers/clients.router";
 import { EMPLOYEES_ROUTER } from "./routers/employee.router";
 import { PRODUCT_ROUTER } from "./routers/product.router";
@@ -25,6 +25,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname,'public')));
 
 app.use(express.static("public"));
+app.get("/swagger.json", (req, res) => {
+  res.setHeader("Content-Type", "application/json");
+  res.send(swaggerSpec);
+});
 
 app.use("/api/visitors", VISITORS_ROUTER);
 // app.use("/", (req: Request, res: Response) => {
@@ -36,11 +40,14 @@ app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
 });
 
-app.use(
-  "/docs",
-  serveFiles(swaggerSpec),
-  (req: any, res: any) => res.send(generateHTML(swaggerSpec))
-);
+app.get("/docs", (req, res) => {
+  res.redirect("/docs.html");
+});
+// app.use(
+//   "/docs",
+//   serveFiles(swaggerSpec),
+//   (req: any, res: any) => res.send(generateHTML(swaggerSpec))
+// );
 // app.use("/docs", swagerUi.serve, swagerUi.setup(swaggerSpec));
 /* app.use("/docs", swagerUi.serve, swagerUi.setup(swaggerSpec, {
   swaggerOptions: {
