@@ -18,6 +18,8 @@ export const PRODUCT_ROUTER = Router();
  * /products/all/{page}/{items_per_page}:
  *   get:
  *     summary: Returns all products, per page and by number of items per page
+ *     security:
+ *       - bearerAuth: []
  *     tags: [Products]
  *     parameters:
  *       - in: path
@@ -62,6 +64,8 @@ PRODUCT_ROUTER.get("/all/:page?/:items_per_page?", async (req, res) => {
  * /products/{id}:
  *   get:
  *     summary: Return a products by ID
+ *     security:
+ *       - bearerAuth: []
  *     tags: [Products]
  *     parameters:
  *       - in: path
@@ -89,6 +93,8 @@ PRODUCT_ROUTER.get("/:id", async (req, res) => {
  * /products:
  *   post:
  *     summary: Create a new products
+ *     security:
+ *       - bearerAuth: []
  *     tags: [Products]
  *     requestBody:
  *       required: true
@@ -117,6 +123,8 @@ PRODUCT_ROUTER.post("/", async (req, res) => {
  * /products/{id}:
  *   delete:
  *     summary: Deleting a product by ID
+ *     security:
+ *       - bearerAuth: []
  *     tags: [Products]
  *     parameters:
  *       - in: path
@@ -144,6 +152,8 @@ PRODUCT_ROUTER.delete("/:id", async (req, res) => {
  * /products/{id}:
  *   put:
  *     summary: Create a new product
+ *     security:
+ *       - bearerAuth: []
  *     tags: [Products]
  *     parameters:
  *       - in: path

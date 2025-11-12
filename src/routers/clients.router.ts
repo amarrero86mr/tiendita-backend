@@ -69,6 +69,8 @@ CLIENTS_ROUTER.get("/:id", async (req, res) => {
  * /clients:
  *   post:
  *     summary: Create a new client
+ *     security:
+ *       - bearerAuth: []
  *     tags: [Clients]
  *     requestBody:
  *       required: true
@@ -98,6 +100,8 @@ CLIENTS_ROUTER.post("/", async (req, res) => {
  * /clients/{id}:
  *   put:
  *     summary: Create a new client
+ *     security:
+ *       - bearerAuth: []
  *     tags: [Clients]
  *     parameters:
  *       - in: path
@@ -135,6 +139,8 @@ CLIENTS_ROUTER.put("/:id", async (req, res) => {
  * /clients/{id}:
  *   delete:
  *     summary: Deleting a client by ID changes its active status to false.
+ *     security:
+ *       - bearerAuth: []
  *     tags: [Clients]
  *     parameters:
  *       - in: path

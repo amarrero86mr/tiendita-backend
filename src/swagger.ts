@@ -55,8 +55,8 @@ import swaggerJsDoc from "swagger-jsdoc";
  *
  * @swagger
  *  tags:
- *    name: Clients
- *    name: Products
+ *    - name: Clients
+ *    - name: Products
  */
 const swaggerSpec = swaggerJsDoc({
   definition: {
