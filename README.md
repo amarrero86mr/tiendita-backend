@@ -1,89 +1,137 @@
-# Tiendita_DB
+# 🏪 Tiendita_DB
 
-**Proyecto backend para llevar el registro contable de una tienda. Este proyecto utiliza [Node.js](http://nodejs.org) y [Express](https://expressjs.com) .**
+**Proyecto backend para llevar el registro contable y administrativo de una tienda.**  
+Desarrollado con **Node.js**, **Express**, y **MySQL**, este proyecto permite registrar movimientos de dinero y gestionar entidades como productos, clientes, proveedores y empleados.  
 
-**Este proyecto tiene una [Guía de buenas prácticas](https://github.com/UrielAraujoGit/tiendita-backend/blob/master/STYLEGUIDE.md).**
+---
 
-## Contenidos
+## 🧩 Acerca del proyecto
 
-- [Acerca del proyecto](#acerca-del-proyecto)
-- [Arquitectura](#arquitectura-del-proyecto)
-- [Setup](#setup)
+Este proyecto nació como una colaboración entre:
+- **Uriel Araujo** - [UrielAraujoGit](https://github.com/UrielAraujoGit)
+- **Nora Villanueva** - [VillanuevaNoraB](https://github.com/VillanuevaNoraB)  
+- **Elías Suárez** - [SuspiciousSchrodinger](https://github.com/SuspiciousSchrodinger)  
+- **Agustín Marrero** - [amarrero86mr](https://github.com/amarrero86mr)
 
-<h2 id="acerca-del-proyecto">Acerca del proyecto</h2>
-
-Este es un proyecto creado con [Node.js](https://nodejs.org/), [Express](https://expressjs.com) y [SQL](https://en.wikipedia.org/wiki/SQL).
-En el cuál se puede llevar registro de los movimientos de dinero de una tienda. Dichos movimientos están separados en 3 entidades:
-
-- Productos (products).
-- Clientes (clients).
-- Proveedores (suppliers).
-- Empleados (employees).
-
-<h2 id="arquitectura-del-proyecto">Arquitectura</h2>
+---
+## 🏗️ Arquitectura
 
 ### Modelo de datos
 
-Cada una de las entidades anteriormente mencionadas puede registrar un movimiento positivo o negativo de dinero.
+El sistema maneja las siguientes entidades principales:
 
-Estos movimientos se registran en una tabla `transactions` de la siguiente manera:
+- **Products (productos)**
+- **Clients (clientes)**
+- **Suppliers (proveedores)**
+- **Employees (empleados)**
+- **Transactions (movimientos de dinero)**
+- **Visitors (usuarios autorizados para acceder a la API)**
 
-[Modelo de datos en SQL](https://media.discordapp.net/attachments/1253829245348745346/1268362673356017787/image.png?ex=66e6d10a&is=66e57f8a&hm=2fa6836255afe52f64e3f2092b8f5c848ca51622cd0e79a2d51b7c523a1087b1&=&format=webp&quality=lossless&width=687&height=430)
+Cada entidad puede registrar operaciones positivas o negativas que impactan el balance general.  
+Las transacciones se registran en la tabla `transactions`, que referencia las demás entidades según su tipo de operación.
 
-### API
+---
 
-Este proyecto expone una [API](https://en.wikipedia.org/wiki/API) por la cuál se podrá interactuar con el sistema, las diferentes entidades y registrar los movimientos de dinero deseados.
+## 📘 API REST
 
-Esta API se divide en diferentes rutas, las cuales son:
+Las rutas principales son:
 
-- /products
-- /clients
-- /suppliers
-- /employees
-- /transactions
-
-las diferentes rutas aplican la siguiente estructura de [`endpoints`](https://en.wikipedia.org/wiki/Endpoint_interface), utilizando el [Protocolo HTTP](https://en.wikipedia.org/wiki/HTTP):
-
-### Arquitectura de endpoints
-
-| Método   | Endpoint       | Descripción                                           | Cuerpo (Request) | Respuesta (Response)        |
-| -------- | -------------- | ----------------------------------------------------- | ---------------- | --------------------------- |
-| `GET`    | `/entidad/all` | Obtener la lista de todos los elementos de la entidad | N/A              | Lista de entidad            |
-| `GET`    | `/entidad/:id` | Obtener un elemento específico                        | N/A              | Detalle de la entidad       |
-| `POST`   | `/entidad`     | Crear un nuevo elemento de la entidad                 | `{...}`          | Entidad creada              |
-| `PUT`    | `/entidad/:id` | Actualizar un elemento existente                      | `{...}`          | Entidad actualizada         |
-| `DELETE` | `/entidad/:id` | Eliminar un elemento                                  | N/A              | Confirmación de eliminación |
+| Método | Endpoint | Descripción |
+|:------:|-----------|-------------|
+| `GET` | `/products/all` | Lista todos los productos |
+| `GET` | `/clients/all` | Lista todos los clientes |
+| `POST` | `/transactions` | Registra un movimiento de dinero |
+| `POST` | `/visitors/login` | Inicia sesión y genera un JWT |
+| `POST` | `/visitors/register` | Registra un nuevo visitante |
+| `GET` | `/docs` | Interfaz de documentación Swagger (protegida por token) |
 
 ### Detalles adicionales:
 
 - **Errores comunes**:
   - `400 Bad Request`: Faltan campos obligatorios en la solicitud.
+  - `401 Bad Request`: Acceso no autorizado / autorización expirada.
   - `404 Not Found`: La entidad no existe.
   - `500 Internal server error`: Error interno del servidor.
 
-<h2 id="setup">Setup</h2>
+---
+\
+Con el tiempo, el proyecto evolucionó con una nueva **implementación backend** realizada por Agustín y supevisada por Uriel, que incorpora:
+- 🔐 **Autenticación y autorización JWT**
+- 🤖 **Protección contra bots mediante reCAPTCHA**
+- 👤 **Entidad `visitors`** para gestionar accesos de usuarios humanos
+- 📜 **Documentación interactiva con Swagger UI**
+- 🧱 **Middleware de seguridad** para proteger rutas críticas
+- ⚙️ **Optimización de estructura del proyecto y modularización**
+---
+## 🔒 Seguridad
 
-Para poder ejecutar el proyecto, se necesitan segir los siguentes pasos:
+### 1. Autenticación con JWT
+El acceso a las rutas de la API requiere un **token JWT** válido.  
+Los tokens se obtienen tras iniciar sesión desde los formularios de **Login** o **Register**, y son verificados por un **middleware** antes de permitir el acceso.
 
-- Descargar el repositorio.
-- Tener instalado [Node.js](https://nodejs.org)
-- Abrir una terminal en la carpeta raíz del repositorio
-- Ejecutar el comando:
+### 2. Protección anti-bots
+El sistema utiliza un **honeypot (campo oculto)** y **Google reCAPTCHA** en los formularios de registro e inicio de sesión.  
+Esto asegura que solo usuarios humanos puedan generar accesos válidos.
 
-```console
+### 3. Entidad `visitors`
+Se agregó una nueva tabla `visitors` que permite:
+- Registrar nuevos visitantes
+- Autenticarlos mediante JWT
+- Controlar el acceso a la interfaz `/docs` (Swagger UI)
+
+---
+
+## 📜 Documentación con Swagger
+
+El proyecto incluye documentación interactiva disponible en `/docs`, generada con **Swagger UI**.  
+Esta documentación permite probar cada endpoint directamente desde el navegador, autenticándose con el token JWT obtenido tras el login.
+
+---
+
+## ⚙️ Setup
+
+### 1. Requisitos previos
+- Node.js ≥ 18
+- MySQL ≥ 8.0
+- npm o yarn
+
+### 2. Instalación
+```bash
+git clone https://github.com/tuusuario/Tiendita_DB.git
+cd Tiendita_DB
 npm install
 ```
 
-Una vez realizados los pasos anteriores, solo resta ejecutar el proyecto con el siguiente comando:
+### 3. Configuración
 
-```console
-npm run dev
-```
+Crea un archivo .env en la raíz del proyecto con tus credenciales:
 
-## Contribuidores
+env \
+Copiar código \
+PORT=3000 \
+DB_HOST=localhost \
+DB_USER=root \
+DB_PASSWORD=tu_contraseña \
+DB_NAME=tiendita_db \
+JWT_SECRET=clave_super_segura \
 
-- **Elías Suárez** - [SuspiciousSchrodinger](https://github.com/SuspiciousSchrodinger)
-- **Nora Villanueva** - [VillanuevaNoraB](https://github.com/VillanuevaNoraB)
-- **Agustín Marrero** - [amarrero86mr](https://github.com/amarrero86mr)
+### 4. Ejecución
 
-[Guía de buenas prácticas](https://github.com/UrielAraujoGit/tiendita-backend/blob/master/STYLEGUIDE.md)
+Copiar código \
+ ```npm run dev ``` \
+El servidor quedará disponible en:
+👉 http://localhost:3000
+
+La documentación se puede consultar en:
+👉 http://localhost:3000/docs
+
+🧠 Buenas prácticas
+El proyecto sigue la Guía de buenas prácticas del equipo original, incluyendo:
+
+- Nombres consistentes en rutas y modelos
+- Validaciones de datos en cada endpoint
+- Manejo de errores controlado
+- Modularización del código
+- Uso de middlewares reutilizables
+
+---
