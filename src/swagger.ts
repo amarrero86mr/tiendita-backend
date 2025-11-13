@@ -52,11 +52,29 @@ import swaggerJsDoc from "swagger-jsdoc";
  *         product_description: "Paquete de yerba Piporé clásica"
  *         price: 2150
  *         stock: 500
+ * 
+ *     Employees:
+ *       type: object
+ *       required:
+ *         - employee_name
+ *         - active
+ *       properties:
+ *         employee_name:
+ *           type: string
+ *           description: Employee name
+ *         active:
+ *           type: boolean
+ *           descripton: Whether the eployee is available
+ *       example:
+ *         id_employee: 4
+ *         employee_name: "Patricio"
+ *         active: true
  *
  * @swagger
  *  tags:
  *    - name: Clients
  *    - name: Products
+ *    - name: Employees
  */
 const swaggerSpec = swaggerJsDoc({
   definition: {

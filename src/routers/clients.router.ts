@@ -99,7 +99,7 @@ CLIENTS_ROUTER.post("/", async (req, res) => {
  * @swagger
  * /clients/{id}:
  *   put:
- *     summary: Create a new client
+ *     summary: Edit an client
  *     security:
  *       - bearerAuth: []
  *     tags: [Clients]
@@ -119,7 +119,7 @@ CLIENTS_ROUTER.post("/", async (req, res) => {
  *             example: { "client_name": "Clien Name", "active": true }
  *     responses:
  *       201:
- *         description: Client created successfully
+ *         description: Client successfully edited
  *         content:
  *           application/json:
  *             schema:
